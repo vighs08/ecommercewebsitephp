@@ -1,0 +1,155 @@
+# 🛒 E-Commerce Website (PHP)
+
+A simple e-commerce web application built with PHP, MySQL, and Bootstrap as a web technology assignment. It supports user authentication, product browsing, a shopping cart, admin product management, and a contact form.
+
+---
+
+## 📁 Project Structure
+
+```
+webtechassignment/
+├── index.php             # Landing page
+├── login.php             # User login
+├── signup.php            # User registration
+├── logout.php            # Session destroy & redirect
+├── products.php          # Product listing (admin view with CRUD options)
+├── shop.php              # Product browsing (user-facing shop)
+├── cart.php              # Shopping cart (session-based)
+├── add_product.php       # Add a new product (authenticated)
+├── edit_product.php      # Edit an existing product
+├── delete_product.php    # Delete a product
+├── create_product.php    # Alternate product creation form
+├── contact.php           # Contact form
+├── submit_contact.php    # Contact form submission confirmation
+├── styles.css            # Custom styles
+├── indexpage.html        # Static landing page (HTML version)
+├── e-commerce_db.sql     # MySQL database dump
+└── ecommcer.webp         # Background image asset
+```
+
+---
+
+## ✨ Features
+
+- **User Authentication** — Register and log in with hashed passwords (bcrypt via `password_hash`)
+- **Session Management** — Protected pages redirect unauthenticated users to login
+- **Product Listing** — Browse all products with name, description, price, and image
+- **Shopping Cart** — Session-based cart; add items and view cart contents
+- **Product Management (CRUD)** — Add, edit, and delete products with image upload support
+- **Contact Page** — Contact form with a submission confirmation page
+- **Responsive UI** — Built with Bootstrap 5.3
+
+---
+
+## 🗄️ Database Schema
+
+Database name: `e-commerce_db`
+
+**`users` table**
+
+| Column     | Type         | Notes              |
+|------------|--------------|--------------------|
+| id         | INT (PK, AI) |                    |
+| username   | VARCHAR(50)  |                    |
+| email      | VARCHAR(100) | Unique             |
+| password   | VARCHAR(255) | bcrypt hashed      |
+
+**`products` table**
+
+| Column      | Type           | Notes                    |
+|-------------|----------------|--------------------------|
+| id          | INT (PK, AI)   |                          |
+| name        | VARCHAR(100)   |                          |
+| description | TEXT           |                          |
+| price       | DECIMAL(10,2)  |                          |
+| image       | MEDIUMBLOB     | Stored as binary / filename |
+| created_at  | TIMESTAMP      | Auto set on insert       |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [XAMPP](https://www.apachefriends.org/) or any local PHP/MySQL server (PHP 7.4+ recommended; tested on PHP 8.2 / MariaDB 10.4)
+- A web browser
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/vighs08/ecommercewebsitephp.git
+   ```
+
+2. **Move files to your server's web root**
+   ```bash
+   # For XAMPP on Windows
+   cp -r ecommercewebsitephp/webtechassignment C:/xampp/htdocs/ecommerce
+
+   # For XAMPP on Linux/macOS
+   cp -r ecommercewebsitephp/webtechassignment /opt/lampp/htdocs/ecommerce
+   ```
+
+3. **Import the database**
+   - Start Apache and MySQL from the XAMPP control panel
+   - Open [phpMyAdmin](http://localhost/phpmyadmin)
+   - Create a new database named `e-commerce_db`
+   - Click **Import** and upload `webtechassignment/e-commerce_db.sql`
+
+4. **Configure the database connection**
+
+   Each PHP file connects to the database directly. The default credentials are:
+   ```php
+   $conn = new mysqli('localhost', 'root', '', 'e-commerce_db');
+   ```
+   Update the host, username, and password in each file if your MySQL setup differs.
+
+5. **Run the app**
+
+   Open your browser and go to:
+   ```
+   http://localhost/ecommerce/index.php
+   ```
+
+---
+
+## 🧭 Page Flow
+
+```
+index.php  →  login.php / signup.php
+                     ↓
+              products.php  (product list + CRUD)
+                 ↓         ↓
+              shop.php   add_product.php
+                 ↓       edit_product.php
+              cart.php   delete_product.php
+```
+
+---
+
+## ⚠️ Known Limitations
+
+This project was built as a learning assignment. The following issues exist and should be addressed before any production use:
+
+- **SQL Injection** — User inputs are embedded directly into SQL queries without prepared statements. Use `mysqli_prepare()` or PDO with bound parameters.
+- **No CSRF Protection** — Forms lack cross-site request forgery tokens.
+- **Hardcoded DB credentials** — Database connection details are repeated in every file; consider a shared `config.php`.
+- **No input validation** — Server-side validation is minimal.
+- **Cart is session-only** — Cart data is lost when the session ends; no persistent cart storage.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer      | Technology                   |
+|------------|------------------------------|
+| Backend    | PHP 8.2                      |
+| Database   | MySQL / MariaDB 10.4         |
+| Frontend   | HTML5, CSS3, Bootstrap 5.3   |
+| Dev Server | XAMPP (Apache + MySQL)       |
+
+---
+
+## 📄 License
+
+This project was created as a college web technology assignment. No license is specified; use for educational purposes.
